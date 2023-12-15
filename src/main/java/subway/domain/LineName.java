@@ -1,6 +1,5 @@
 package subway.domain;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,9 +25,9 @@ public enum LineName {
         return stationNames;
     }
 
-    public static List<Station> stations(LineName lineName){
+    public static List<Station> stations(LineName lineName) {
         return lineName.stationNames.stream()
-                .map(stationName -> new Station(stationName.name()))
+                .map(stationName -> new Station(stationName))
                 .collect(Collectors.toList());
     }
 }

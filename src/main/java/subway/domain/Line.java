@@ -4,22 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Line {
-    private String name;
+    private LineName lineName;
 
     private List<Station> stations;
 
-    public Line(String name) {
-        this.name = name;
+    public Line(LineName lineName) {
+        this.lineName = lineName;
         this.stations = new ArrayList<>();
     }
 
     public String getName() {
-        return name;
+        return lineName.getName();
     }
 
-    public void registerStation(List<Station> stations){
+    public void registerStation(List<Station> stations) {
         this.stations = new ArrayList<>(stations);
     }
 
-    // 추가 기능 구현
 }

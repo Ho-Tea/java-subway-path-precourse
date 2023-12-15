@@ -3,14 +3,14 @@ package subway.domain;
 import java.util.Objects;
 
 public class Station {
-    private String name;
+    private StationName stationName;
 
-    public Station(String name) {
-        this.name = name;
+    public Station(StationName stationName) {
+        this.stationName = stationName;
     }
 
     public String getName() {
-        return name;
+        return stationName.name();
     }
 
     @Override
@@ -18,11 +18,11 @@ public class Station {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Station station = (Station) o;
-        return Objects.equals(name, station.name);
+        return stationName == station.stationName;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(stationName);
     }
 }
