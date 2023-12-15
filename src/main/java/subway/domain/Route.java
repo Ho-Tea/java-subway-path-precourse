@@ -34,4 +34,22 @@ public enum Route {
     public int getTime() {
         return time;
     }
+
+    public static int distance(StationName start, StationName end){
+        for(Route route : values()){
+            if(route.connected.containsAll(List.of(start, end))){
+                return route.distance;
+            }
+        }
+        return 0;
+    }
+
+    public static int time(StationName start, StationName end){
+        for(Route route : values()){
+            if(route.connected.containsAll(List.of(start, end))){
+                return route.time;
+            }
+        }
+        return 0;
+    }
 }
