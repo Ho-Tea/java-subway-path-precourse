@@ -1,5 +1,6 @@
 package subway.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,5 +21,17 @@ public enum Route {
         this.connected = connected;
         this.distance = distance;
         this.time = time;
+    }
+
+    public List<StationName> getConnected() {
+        return new ArrayList<>(connected);
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public int getTime() {
+        return time;
     }
 }
