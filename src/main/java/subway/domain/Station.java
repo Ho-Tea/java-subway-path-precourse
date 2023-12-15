@@ -10,7 +10,7 @@ public class Station {
     }
 
     public String getName() {
-        return stationName.name();
+        return stationName.toString();
     }
 
     @Override
