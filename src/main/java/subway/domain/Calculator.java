@@ -31,7 +31,7 @@ public class Calculator {
         return graph;
     }
 
-    public List<Integer> findShortestDistance() {
+    public List<String> findShortest() {
         WeightedMultigraph<String, DefaultWeightedEdge> graph = init();
         for (Route route : Route.values()) {
             List<StationName> connected = route.getConnected();
@@ -41,10 +41,19 @@ public class Calculator {
         return dijkstraShortestPath.getPath(start.getName(), end.getName()).getVertexList();
     }
 
+
     public int sumDistance(List<String> stations){
         int sum = 0;
         for(int i = 0; i < stations.size()-1; i++){
             sum += Route.distance(StationName.valueOf(stations.get(i)), StationName.valueOf(stations.get(i+1)));
+        }
+        return sum;
+    }
+
+    public int sumTime(List<String> stations){
+        int sum = 0;
+        for(int i = 0; i < stations.size()-1; i++){
+            sum += Route.time(StationName.valueOf(stations.get(i)), StationName.valueOf(stations.get(i+1)));
         }
         return sum;
     }
