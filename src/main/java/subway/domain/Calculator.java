@@ -31,11 +31,21 @@ public class Calculator {
         return graph;
     }
 
-    public List<String> findShortest() {
+    public List<String> findShortestDistance() {
         WeightedMultigraph<String, DefaultWeightedEdge> graph = init();
         for (Route route : Route.values()) {
             List<StationName> connected = route.getConnected();
             graph.setEdgeWeight(graph.addEdge(connected.get(0).toString(), connected.get(1).toString()), route.getDistance());
+        }
+        DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
+        return dijkstraShortestPath.getPath(start.getName(), end.getName()).getVertexList();
+    }
+
+    public List<String> findShortestTime() {
+        WeightedMultigraph<String, DefaultWeightedEdge> graph = init();
+        for (Route route : Route.values()) {
+            List<StationName> connected = route.getConnected();
+            graph.setEdgeWeight(graph.addEdge(connected.get(0).toString(), connected.get(1).toString()), route.getTime());
         }
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
         return dijkstraShortestPath.getPath(start.getName(), end.getName()).getVertexList();
