@@ -5,6 +5,7 @@ import subway.view.OutputView;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 public class SubwayController {
     private final Scanner scanner;
@@ -28,33 +29,68 @@ public class SubwayController {
     }
 
     public void run(){
-        while (inputMainFunction()){
-            outputView.
+        while (attempt(() -> inputMainFunction())){
+            RouteFunction routeFunction = attempt(() -> inputRouteFunction());
+            if(routeFunction.equals(RouteFunction.BACK)){
+                continue;
+            }
+            if(routeFunction.equals(RouteFunction.SHORTEST_DISTANCE)){
+                shortestDistance(attempt(() -> inputTotalStation()));
+            }
+            if(routeFunction.equals(RouteFunction.SHORTEST_TIME)){
+                shortestTime(attempt(() -> inputTotalStation()));
+            }
         }
-
-        String start = scanner.nextLine();
-        String end = scanner.nextLine();
-        Calculator calculator = new Calculator(new Station(StationName.valueOf(start)), new Station(StationName.valueOf(end)));
-        List<String> stations =  calculator.findShortest();
-        for(String station : stations){
-            System.out.println(station);
-        }
-        System.out.println(calculator.sumDistance(stations));
-        System.out.println(calculator.sumTime(stations));
     }
 
-    public boolean inputMainFunction(){
+    private boolean inputMainFunction(){
         outputView.printBegin();
         String choose = scanner.nextLine();
-        if(choose.equals("Q")){
-            return false;
-        }
-        if(Integer.parseInt(choose) == 1){
+        if(MainFunction.from(choose).equals(MainFunction.START)){
             return true;
         }
-        throw new IllegalArgumentException("해당 문자에 일치하는 기능이 없습니다.");
+        return false;
     }
 
+    private RouteFunction inputRouteFunction(){
+        outputView.printRouteStandard();
+        String choose = scanner.nextLine();
+        return RouteFunction.from(choose);
+    }
+
+    private Calculator inputTotalStation(){
+        StationName start = attempt(() -> inputStartStation());
+        StationName end = attempt(() -> inputEndStation());
+        return new Calculator(new Station(start), new Station(end));
+    }
+
+    private StationName inputStartStation(){
+        outputView.printStartStation();
+        String start = scanner.nextLine();
+        return StationName.valueOf(start);
+    }
+    private StationName inputEndStation(){
+        outputView.printEndStation();
+        String end = scanner.nextLine();
+        return StationName.valueOf(end);
+    }
+    private void shortestDistance(Calculator calculator){
+        List<String> stations =  calculator.findShortestDistance();
+        outputView.printResult(calculator.sumDistance(stations), calculator.sumTime(stations), stations);
+    }
+    private void shortestTime(Calculator calculator){
+        List<String> stations =  calculator.findShortestTime();
+        outputView.printResult(calculator.sumDistance(stations), calculator.sumTime(stations), stations);
+    }
+
+    private <T> T attempt(Supplier<T> inputSupplier) {
+        try {
+            return inputSupplier.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            return attempt(inputSupplier);
+        }
+    }
 
 
 }
