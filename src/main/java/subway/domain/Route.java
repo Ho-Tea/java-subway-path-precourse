@@ -3,23 +3,25 @@ package subway.domain;
 import java.util.List;
 
 public class Route {
+    private final Station start;
+    private final Station end;
 
-    public Route() {
-        initStation();
-        initLine();
+    public Route(Station start, Station end) {
+        validateRoute(start, end);
+        this.start = start;
+        this.end = end;
     }
-
-    public void initStation(){
-        for(StationName stationName : StationName.values()){
-            StationRepository.addStation(new Station(stationName.name()));
+    void validateRoute(Station start, Station end){
+        if(start.equals(end)){
+            throw new IllegalArgumentException("출발역과 도착역이 동일합니다");
         }
     }
 
-    public void initLine(){
-        for (LineName lineName : LineName.values()){
-            LineRepository.addLine(new Line(lineName.name()));
-        }
+    public void getShortestPath(){
+
     }
+
+
 
 
 }
