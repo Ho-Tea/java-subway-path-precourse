@@ -28,14 +28,14 @@ public class OutputView {
     }
 
     public void printResult(int distance, int time, List<String> stations){
-        System.out.println(System.lineSeparator() +
+        System.out.print(System.lineSeparator() +
                 "## 조회 결과\n" +
                 "[INFO] ---\n" +
                 String.format("[INFO] 총 거리: %dkm\n", distance) +
                 String.format("[INFO] 총 소요 시간: %d분\n", time) +
                 "[INFO] ---\n");
         for(String station : stations){
-            System.out.println(String.format("[INFO] %s\n",station));
+            System.out.println(String.format("[INFO] %s",station));
         }
         System.out.println();
     }
